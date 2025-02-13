@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',  # Added for DRF
     'posts',           # Added for the posts app
+    'django_extensions', # Added for django-extensions
 ]
 
 MIDDLEWARE = [
