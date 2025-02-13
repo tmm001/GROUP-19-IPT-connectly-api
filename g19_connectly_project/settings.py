@@ -67,7 +67,6 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
 
-
 ROOT_URLCONF = 'g19_connectly_project.urls'
 
 TEMPLATES = [
