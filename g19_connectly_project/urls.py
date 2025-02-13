@@ -19,6 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),  # Keep this line
-    path('posts/', include('posts.urls')),       # Add this line
+    path('api-auth/', include('rest_framework.urls')),  # For the browsable API
+    path('posts/', include('posts.urls')), # For the posts app
 ]
