@@ -4,8 +4,9 @@ from .models import User, Post, Comment  # Import all models
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'created_at', 'password']  # Include 'password'
-        extra_kwargs = {'password': {'write_only': True}}  # Make 'password' write-only
+        fields = ['id', 'username', 'email', 'password', 'date_joined']  # Use 'date_joined'
+        extra_kwargs = {'password': {'write_only': True},
+                        'date_joined': {'read_only': True}} # Make date_joined read-only
 
 class PostSerializer(serializers.ModelSerializer):
     comments = serializers.StringRelatedField(many=True, read_only=True)
