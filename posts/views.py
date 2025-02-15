@@ -107,7 +107,8 @@ class PostListCreate(APIView):
         if serializer.is_valid():
             post = PostFactory.create_post(
                 author=request.user,
-                content=serializer.validated_data['content']
+                content=serializer.validated_data['content'],
+                post_type=serializer.validated_data.get('post_type', 'text') # Get post_type
             )
             logger.info(f"Post created by {request.user.username} with id {post.id}")  # Log post creation
             return_serializer = PostSerializer(post)
