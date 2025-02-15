@@ -4,7 +4,7 @@ from .models import User, Post, Comment  # Import all models
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password', 'date_joined']  # Use 'date_joined'
+        fields = ['id', 'username', 'email', 'password', 'date_joined']  # Include 'password'
         extra_kwargs = {'password': {'write_only': True},
                         'date_joined': {'read_only': True}} # Make date_joined read-only
 
@@ -14,7 +14,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'content', 'author', 'created_at', 'comments']
+        fields = ['id', 'content', 'author', 'created_at', 'comments', 'post_type'] # Include post_type
 
 
 class CommentSerializer(serializers.ModelSerializer):
