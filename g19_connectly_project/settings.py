@@ -37,10 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',  # Added for DRF
-    'posts',           # Added for the posts app
-    'django_extensions', # Added for django-extensions
+    'rest_framework',
+    'posts',
+    'rest_framework_simplejwt',
+    'django_extensions',
+    'corsheaders',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
