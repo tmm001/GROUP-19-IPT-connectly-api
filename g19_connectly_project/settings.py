@@ -37,9 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',  # Added for DRF
-    'posts',           # Added for the posts app
+    'rest_framework',
+    'posts',
+    'rest_framework_simplejwt',
+    'django_extensions',
+    'corsheaders',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,6 +55,63 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Security settings
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 31536000  # One year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Password hashing 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
+
+# CSRF settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # Use JWT
+        'rest_framework.authentication.SessionAuthentication', # Keep for browsable API
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated', # Default to authenticated
+    ]
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5), # Short-lived access tokens
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1), # Refresh tokens for longer sessions
+    "ROTATE_REFRESH_TOKENS": False, # Don't rotate refresh tokens on every refresh
+    "BLACKLIST_AFTER_ROTATION": True, # Blacklist old refresh tokens after rotation
+    "UPDATE_LAST_LOGIN": False, # Don't update last_login on every request
+    "ALGORITHM": "HS256", # Use HMAC-SHA256
+    "SIGNING_KEY": SECRET_KEY, # Use your Django SECRET_KEY
+    "VERIFYING_KEY": "",  #Not needed
+    "AUDIENCE": None, # Not used for now
+    "ISSUER": None,  # Not used for now
+    "JSON_ENCODER": None, # Not used for now
+    "JWK_URL": None,    # Not used for now
+    "LEEWAY": 0,         # Not used for now
+    "AUTH_HEADER_TYPES": ("Bearer",), # Use "Bearer" prefix
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION", # Standard Authorization header
+    "USER_ID_FIELD": "id", # Use the 'id' field
+    "USER_ID_CLAIM": "user_id", # Use 'user_id' as the claim name
+    "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",), # Use AccessToken class
+    "TOKEN_TYPE_CLAIM": "token_type", # Use 'token_type' as the claim name
+    "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser", # Not used for now
+    "JTI_CLAIM": "jti", # Use 'jti' (JWT ID) claim
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",# Not used for now
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),    # Not used for now
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),# Not used for now
+}
+
 
 ROOT_URLCONF = 'g19_connectly_project.urls'
 
